@@ -1,0 +1,27 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# next
+.next
+out
+build
+dist
+
+# env / secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# debug / misc
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.pem
+.vercel
+.turbo
+*.tsbuildinfo
+next-env.d.ts
