@@ -54,12 +54,15 @@ export default function SignInPage() {
       </p>
 
       {session && (
-        <p className="mb-4 rounded-md border border-zinc-700 bg-filmy-card px-3 py-2 text-sm text-filmy-muted">
-          Already signed in as <span className="text-white">{session.email}</span> (stub).
+        <p className="mb-4 rounded-md border border-filmy-border bg-filmy-elevated px-3 py-2 text-sm text-filmy-muted">
+          Already signed in as <span className="text-filmy-fg">{session.email}</span> (stub).
         </p>
       )}
 
-      <form onSubmit={onSubmit} className="space-y-4 rounded-xl border border-zinc-800 bg-filmy-card p-5 sm:p-6">
+      <form
+        onSubmit={onSubmit}
+        className="space-y-4 rounded-xl border border-filmy-border bg-filmy-elevated p-5 sm:p-6"
+      >
         <label className="block">
           <span className="mb-1.5 block text-sm text-filmy-muted">Email</span>
           <input
@@ -67,7 +70,7 @@ export default function SignInPage() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="min-h-11 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 text-white outline-none focus:border-filmy-accent"
+            className="min-h-11 w-full rounded-md border border-filmy-border bg-filmy-bg px-3 text-filmy-fg outline-none focus:border-filmy-accent"
             placeholder="you@example.com"
             required
           />
@@ -79,7 +82,7 @@ export default function SignInPage() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="min-h-11 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 text-white outline-none focus:border-filmy-accent"
+            className="min-h-11 w-full rounded-md border border-filmy-border bg-filmy-bg px-3 text-filmy-fg outline-none focus:border-filmy-accent"
             placeholder="••••••••"
             required
           />
@@ -93,7 +96,7 @@ export default function SignInPage() {
 
         <button
           type="submit"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-zinc-950 transition hover:brightness-110"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-filmy-on-accent transition hover:bg-filmy-accent-hover active:bg-filmy-accent-pressed"
         >
           Sign in (stub)
         </button>

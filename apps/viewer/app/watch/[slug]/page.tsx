@@ -29,23 +29,23 @@ export default async function WatchPage({ params }: Props) {
 
   return (
     <div>
-      <div className="relative mb-4 overflow-hidden rounded-xl border border-zinc-700 bg-black">
+      <div className="relative mb-4 overflow-hidden rounded-xl border border-filmy-border bg-black">
         <div className="flex aspect-video items-center justify-center">
-          <div className="relative z-10 mx-4 max-w-md rounded-lg border border-zinc-600 bg-filmy-card/95 p-5 text-center sm:p-6">
+          <div className="relative z-10 mx-4 max-w-md rounded-lg border border-filmy-border bg-filmy-elevated/95 p-5 text-center sm:p-6">
             <p className="mb-1 text-xs uppercase tracking-widest text-filmy-muted">Access gate</p>
-            <h2 className="mb-2 text-lg font-semibold text-white">
+            <h2 className="mb-2 text-lg font-semibold text-filmy-fg">
               Sign in / member access required
             </h2>
             <p className="mb-2 text-sm text-filmy-muted">
               Package key reserved: {film.playback_package_key || '—'} · no media loaded
             </p>
-            <span className="inline-flex min-h-11 cursor-not-allowed items-center justify-center rounded-md bg-zinc-700 px-5 py-2.5 text-sm font-semibold text-filmy-muted">
+            <span className="inline-flex min-h-11 cursor-not-allowed items-center justify-center rounded-md bg-filmy-elevated px-5 py-2.5 text-sm font-semibold text-filmy-muted">
               Sign in (stub)
             </span>
           </div>
         </div>
       </div>
-      <h1 className="mb-2 text-xl font-bold sm:text-2xl">{film.title}</h1>
+      <h1 className="mb-2 font-display text-xl font-bold sm:text-2xl">{film.title}</h1>
       <Link href={`/films/${film.slug}`} className="text-sm text-filmy-accent hover:underline">
         ← Back to detail
       </Link>
