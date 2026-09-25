@@ -21,3 +21,35 @@ export type Profile = {
   role: 'viewer' | 'admin';
   display_name: string;
 };
+
+/** Homepage / spotlight banner shell — image is a path/text ref only (no binary upload). */
+export type Banner = {
+  id: string;
+  title: string;
+  image_path: string;
+  active: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CollectionVisibility = 'public' | 'members' | 'hidden';
+
+/** Ordered film slug placeholders for discovery rows — local reorder in admin shell. */
+export type Collection = {
+  id: string;
+  name: string;
+  visibility: CollectionVisibility;
+  film_slugs: string[];
+  created_at: string;
+  updated_at: string;
+};
+
+/** Member access grant/revoke shell — no auth backend in week-1 MVP. */
+export type MemberGrant = {
+  id: string;
+  email: string;
+  reason: string;
+  granted_at: string;
+  revoked_at: string | null;
+};
