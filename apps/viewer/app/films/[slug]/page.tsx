@@ -52,7 +52,7 @@ export default async function FilmDetailPage({ params }: Props) {
           </p>
           <Link
             href={`/watch/${film.slug}`}
-            className="inline-flex min-h-11 items-center rounded-md bg-filmy-accent px-6 py-3 font-semibold text-white transition hover:bg-red-700"
+            className="inline-flex min-h-11 items-center rounded-md bg-filmy-accent px-6 py-3 font-semibold text-zinc-950 transition hover:brightness-110"
           >
             Play
           </Link>

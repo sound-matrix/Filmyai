@@ -39,7 +39,7 @@ export function GatedPlayerStub() {
                 <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
                   <Link
                     href="/sign-in"
-                    className="inline-flex min-h-11 items-center justify-center rounded-md bg-filmy-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+                    className="inline-flex min-h-11 items-center justify-center rounded-md bg-filmy-accent px-5 py-2.5 text-sm font-semibold text-zinc-950 transition hover:brightness-110"
                   >
                     Sign in
                   </Link>

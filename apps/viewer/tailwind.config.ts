@@ -9,10 +9,10 @@ const config: Config = {
     extend: {
       colors: {
         filmy: {
-          bg: '#0a0a0f',
-          card: '#16161f',
-          accent: '#e50914',
-          muted: '#a1a1aa',
+          bg: '#0E0E0E',
+          card: '#161616',
+          accent: '#FDBA4D',
+          muted: '#A0A0A0',
         },
       },
     },

@@ -93,7 +93,7 @@ export default function SignInPage() {
 
         <button
           type="submit"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-white transition hover:brightness-110"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-zinc-950 transition hover:brightness-110"
         >
           Sign in (stub)
         </button>
