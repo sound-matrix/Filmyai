@@ -10,9 +10,9 @@ export function PosterCard({ index }: Props) {
   return (
     <Link
       href={`/films/${PLACEHOLDER_SLUG}`}
-      className="block w-36 shrink-0 overflow-hidden rounded-lg bg-filmy-card transition hover:ring-2 hover:ring-filmy-accent/60 sm:w-40"
+      className="block w-36 shrink-0 overflow-hidden rounded-lg bg-filmy-elevated transition hover:ring-2 hover:ring-filmy-accent/60 sm:w-40"
     >
-      <div className="flex aspect-[2/3] items-center justify-center bg-zinc-800 px-2 text-center text-xs text-filmy-muted">
+      <div className="flex aspect-[2/3] items-center justify-center bg-filmy-surface px-2 text-center text-xs text-filmy-muted">
         Empty · awaiting FilmyAI uploads
       </div>
       <div className="p-2">

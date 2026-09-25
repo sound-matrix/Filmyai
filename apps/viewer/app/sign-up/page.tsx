@@ -63,7 +63,10 @@ export default function SignUpPage() {
         Creates a labeled local mock session for staging walkthrough only
       </p>
 
-      <form onSubmit={onSubmit} className="space-y-4 rounded-xl border border-zinc-800 bg-filmy-card p-5 sm:p-6">
+      <form
+        onSubmit={onSubmit}
+        className="space-y-4 rounded-xl border border-filmy-border bg-filmy-elevated p-5 sm:p-6"
+      >
         <label className="block">
           <span className="mb-1.5 block text-sm text-filmy-muted">Display name</span>
           <input
@@ -71,7 +74,7 @@ export default function SignUpPage() {
             autoComplete="nickname"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="min-h-11 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 text-white outline-none focus:border-filmy-accent"
+            className="min-h-11 w-full rounded-md border border-filmy-border bg-filmy-bg px-3 text-filmy-fg outline-none focus:border-filmy-accent"
             placeholder="Your name"
             required
           />
@@ -83,7 +86,7 @@ export default function SignUpPage() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="min-h-11 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 text-white outline-none focus:border-filmy-accent"
+            className="min-h-11 w-full rounded-md border border-filmy-border bg-filmy-bg px-3 text-filmy-fg outline-none focus:border-filmy-accent"
             placeholder="you@example.com"
             required
           />
@@ -95,7 +98,7 @@ export default function SignUpPage() {
             autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="min-h-11 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 text-white outline-none focus:border-filmy-accent"
+            className="min-h-11 w-full rounded-md border border-filmy-border bg-filmy-bg px-3 text-filmy-fg outline-none focus:border-filmy-accent"
             placeholder="••••••••"
             required
           />
@@ -107,7 +110,7 @@ export default function SignUpPage() {
             autoComplete="new-password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
-            className="min-h-11 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 text-white outline-none focus:border-filmy-accent"
+            className="min-h-11 w-full rounded-md border border-filmy-border bg-filmy-bg px-3 text-filmy-fg outline-none focus:border-filmy-accent"
             placeholder="••••••••"
             required
           />
@@ -121,7 +124,7 @@ export default function SignUpPage() {
 
         <button
           type="submit"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-zinc-950 transition hover:brightness-110"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-filmy-on-accent transition hover:bg-filmy-accent-hover active:bg-filmy-accent-pressed"
         >
           Create account (stub)
         </button>

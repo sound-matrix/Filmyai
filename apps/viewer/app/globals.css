@@ -7,5 +7,5 @@
 }
 
 body {
-  @apply bg-filmy-bg text-white antialiased;
+  @apply bg-filmy-bg text-filmy-fg antialiased;
 }
