@@ -20,7 +20,7 @@ export function SpotlightBanner() {
           <div className="flex flex-wrap gap-3 pt-1">
             <Link
               href={`/films/${PLACEHOLDER_SLUG}`}
-              className="inline-flex min-h-11 items-center rounded-md bg-filmy-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+              className="inline-flex min-h-11 items-center rounded-md bg-filmy-accent px-5 py-2.5 text-sm font-semibold text-zinc-950 transition hover:brightness-110"
             >
               View details
             </Link>

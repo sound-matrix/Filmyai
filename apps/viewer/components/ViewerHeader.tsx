@@ -10,8 +10,9 @@ export function ViewerHeader() {
     <header className="sticky top-0 z-40 border-b border-zinc-800 bg-filmy-bg/95 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-lg font-bold tracking-tight text-filmy-accent sm:text-xl">
-            FilmyAI
+          <Link href="/" className="text-lg font-bold tracking-tight sm:text-xl">
+            <span className="text-white">FILMY</span>
+            <span className="text-filmy-accent">AI</span>
           </Link>
           <span className="hidden text-[10px] uppercase tracking-widest text-filmy-muted sm:inline sm:text-xs">
             Viewer · Staging
@@ -47,7 +48,7 @@ export function ViewerHeader() {
               </Link>
               <Link
                 href="/sign-up"
-                className="inline-flex min-h-11 items-center rounded-md bg-filmy-accent px-3 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+                className="inline-flex min-h-11 items-center rounded-md bg-filmy-accent px-3 py-2 text-sm font-semibold text-zinc-950 transition hover:brightness-110"
               >
                 Sign up
               </Link>
