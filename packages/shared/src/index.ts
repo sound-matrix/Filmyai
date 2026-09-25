@@ -1,8 +1,11 @@
 export type {
   AccessRule,
+  AuthSession,
   Banner,
   Collection,
   CollectionVisibility,
+  Entitlement,
+  EntitlementGateState,
   Film,
   MemberGrant,
   Profile,
