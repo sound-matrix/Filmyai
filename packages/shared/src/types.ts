@@ -54,7 +54,7 @@ export type MemberGrant = {
   revoked_at: string | null;
 };
 
-/** Staging auth session shell — local mock only until Supabase keys land. */
+/** Auth session shape for viewer/admin gates (Supabase-backed on admin SOU-13). */
 export type AuthSession = {
   user_id: string;
   email: string;
