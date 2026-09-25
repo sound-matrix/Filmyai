@@ -53,3 +53,35 @@ export type MemberGrant = {
   granted_at: string;
   revoked_at: string | null;
 };
+
+/** Staging auth session shell — local mock only until Supabase keys land. */
+export type AuthSession = {
+  user_id: string;
+  email: string;
+  role: 'viewer' | 'admin';
+  display_name: string;
+  /** ISO timestamp; mock sessions may omit expiry. */
+  expires_at?: string | null;
+};
+
+/**
+ * Catalog entitlement (one-time / admin-grant style).
+ * Pricing TBD — demo may use admin-grant via granted_by.
+ */
+export type Entitlement = {
+  id: string;
+  user_id: string;
+  /** Prefer film_id when catalog IDs exist; slug for placeholder walkthrough. */
+  film_id?: string | null;
+  film_slug?: string | null;
+  reason: string;
+  granted_by: 'admin' | 'purchase' | 'promo' | 'mock';
+  created_at: string;
+  expires_at?: string | null;
+};
+
+/** Soft auth/entitlement gate states for UI shells (no live Stripe/Supabase). */
+export type EntitlementGateState =
+  | 'signed_out'
+  | 'signed_in_no_entitlement'
+  | 'entitled';
