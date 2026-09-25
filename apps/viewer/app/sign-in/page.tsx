@@ -86,7 +86,7 @@ export default function SignInPage() {
         </label>
 
         {error && (
-          <p role="alert" className="text-sm text-red-400">
+          <p role="alert" className="text-sm text-amber-400">
             {error}
           </p>
         )}
