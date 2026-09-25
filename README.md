@@ -4,6 +4,8 @@ Monorepo scaffold for the FilmyAI viewer + admin studio (SOU-11).
 
 **Staging-oriented only** — no production deploy config ships with this scaffold.
 
+**Content lock:** Staging viewer/admin surfaces stay empty until org content uploads (no sample/demo films).
+
 ## Apps
 
 | Package | Path | Dev port |

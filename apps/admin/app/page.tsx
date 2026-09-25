@@ -8,7 +8,9 @@ export default function AdminDashboardPage() {
   return (
     <div>
       <h1 className="mb-2 text-3xl font-bold">Dashboard</h1>
-      <p className="mb-8 text-studio-muted">Admin studio stub · SOU-11 · no live data yet</p>
+      <p className="mb-8 text-studio-muted">
+        No films yet · org uploads later · SOU-11 · no live data yet
+      </p>
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-lg bg-studio-panel p-6">
           <p className="text-sm text-studio-muted">Total films</p>

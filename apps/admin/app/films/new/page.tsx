@@ -38,8 +38,8 @@ export default function NewFilmPage() {
           />
         </div>
         <Field label="Genre" name="genre" required />
-        <Field label="Poster path" name="poster" placeholder="/placeholders/poster.jpg" />
-        <Field label="Backdrop path" name="backdrop" placeholder="/placeholders/backdrop.jpg" />
+        <Field label="Poster path" name="poster" placeholder="Upload later" />
+        <Field label="Backdrop path" name="backdrop" placeholder="Upload later" />
         <div>
           <label htmlFor="access_rule" className="mb-1 block text-sm text-studio-muted">
             Access rule

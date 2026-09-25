@@ -7,7 +7,7 @@ export default function FilmsListPage() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Films</h1>
-          <p className="text-studio-muted">Mock list · Supabase writes later</p>
+          <p className="text-studio-muted">No films yet · org uploads later</p>
         </div>
         <Link
           href="/films/new"
@@ -27,20 +27,28 @@ export default function FilmsListPage() {
             </tr>
           </thead>
           <tbody>
-            {MOCK_FILMS.map((film) => (
-              <tr key={film.id} className="border-t border-zinc-800">
-                <td className="px-4 py-3 font-medium">{film.title}</td>
-                <td className="px-4 py-3">{film.genre}</td>
-                <td className="px-4 py-3">{film.access_rule}</td>
-                <td className="px-4 py-3">
-                  {film.published ? (
-                    <span className="text-green-400">Published</span>
-                  ) : (
-                    <span className="text-amber-400">Draft</span>
-                  )}
+            {MOCK_FILMS.length === 0 ? (
+              <tr className="border-t border-zinc-800">
+                <td colSpan={4} className="px-4 py-8 text-center text-studio-muted">
+                  No films yet
                 </td>
               </tr>
-            ))}
+            ) : (
+              MOCK_FILMS.map((film) => (
+                <tr key={film.id} className="border-t border-zinc-800">
+                  <td className="px-4 py-3 font-medium">{film.title}</td>
+                  <td className="px-4 py-3">{film.genre}</td>
+                  <td className="px-4 py-3">{film.access_rule}</td>
+                  <td className="px-4 py-3">
+                    {film.published ? (
+                      <span className="text-green-400">Published</span>
+                    ) : (
+                      <span className="text-amber-400">Draft</span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
