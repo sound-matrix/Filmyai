@@ -11,6 +11,8 @@ export type {
   Film,
   FilmAccess,
   MemberGrant,
+  PaymentOrderKind,
+  PaymentOrderStatus,
   PricingSettings,
   Profile,
 } from './types';

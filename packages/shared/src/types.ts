@@ -130,3 +130,9 @@ export type FilmAccess = {
   special_pay_price_cents: number | null;
   updated_at: string;
 };
+
+/** Razorpay checkout order kind (SOU-15 test mode). */
+export type PaymentOrderKind = 'member' | 'special_pay';
+
+/** payment_orders.status values (staging Razorpay test mode). */
+export type PaymentOrderStatus = 'created' | 'paid' | 'failed';

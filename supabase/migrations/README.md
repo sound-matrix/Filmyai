@@ -12,6 +12,9 @@ Env names (see repo-root `.env.example`):
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_APP_URL`
+- `NEXT_PUBLIC_RAZORPAY_KEY_ID` (test key id, public)
+- `RAZORPAY_KEY_SECRET` (test secret, server only)
+- `RAZORPAY_WEBHOOK_SECRET` (webhook HMAC, server only; optional until CA configures webhook)
 
 Wire live Supabase clients in `apps/*/lib/supabase.ts` only when CA Staging
 keys are present. Until then, apps soft-fail (return `null`) and show a clear
@@ -37,6 +40,29 @@ Additive migration for Free / Members / Special pay:
 
 **CA:** apply `0003` on staging only after review. No FilmyAI production.
 Checkout / Razorpay is SOU-15 — this migration does not add payment tables.
+
+
+## SOU-15 — `20260925_0004_razorpay_orders.sql` (DRAFT — CA apply only)
+
+Additive migration for Razorpay **test-mode** Member + Special-pay checkout:
+
+1. `payment_orders` table: `user_id` (nullable FK → auth.users), `stub_email`,
+   `kind` (`member` | `special_pay`), `film_slug`, `amount_cents`, `currency`
+   default `INR`, `razorpay_order_id` (unique), `razorpay_payment_id`,
+   `status` (`created` | `paid` | `failed`), `entitlement_id`, `raw_notes`.
+2. Indexes on `razorpay_order_id`, `user_id`, `status`.
+3. RLS enabled; **no client write policies** — service role only.
+
+**Staging only. Razorpay test mode. No production / no live charges.**
+
+Webhook URL for CA/DevOps (viewer staging):
+
+- `https://project-xdwxk.vercel.app/api/webhooks/razorpay`
+- Also any viewer alias host + `/api/webhooks/razorpay`
+
+**CA:** apply `0004` on staging after review. DevOps: set Razorpay test env on
+filmyai-staging Production and redeploy viewer so `NEXT_PUBLIC_RAZORPAY_KEY_ID`
+is baked in. Checkout soft-fails (503 + mock-grant fallback) until keys land.
 
 ## Seed path (admin CMS — SOU-13)
 
