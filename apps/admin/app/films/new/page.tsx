@@ -1,8 +1,9 @@
 'use client';
 
 import type { AccessRule } from '@filmyai/shared';
+import { normalizeAccessRule, rupeesToCents } from '@filmyai/shared';
 import { useRouter } from 'next/navigation';
-import { type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import {
   Field,
   GhostLink,
@@ -15,18 +16,29 @@ import { useStudio } from '../../../components/StudioProvider';
 export default function NewFilmPage() {
   const { createFilm } = useStudio();
   const router = useRouter();
+  const [accessRule, setAccessRule] = useState<AccessRule>('free');
+  const [saving, setSaving] = useState(false);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    createFilm({
+    const rule = normalizeAccessRule(String(fd.get('access_rule') || 'free'));
+    const rupees = String(fd.get('special_pay_price_rupees') || '');
+    const special_pay_price_cents =
+      rule === 'special_pay' ? rupeesToCents(rupees) : null;
+    if (rule === 'special_pay' && (!special_pay_price_cents || special_pay_price_cents <= 0)) {
+      return;
+    }
+    setSaving(true);
+    await createFilm({
       title: String(fd.get('title') || ''),
       slug: String(fd.get('slug') || ''),
       synopsis: String(fd.get('synopsis') || ''),
       genre: String(fd.get('genre') || ''),
       poster_path: String(fd.get('poster_path') || ''),
       backdrop_path: String(fd.get('backdrop_path') || ''),
-      access_rule: String(fd.get('access_rule') || 'public') as AccessRule,
+      access_rule: rule,
+      special_pay_price_cents,
       launch_at: String(fd.get('launch_at') || '')
         ? new Date(String(fd.get('launch_at'))).toISOString()
         : '',
@@ -40,7 +52,7 @@ export default function NewFilmPage() {
     <div className="max-w-xl">
       <h1 className="mb-2 text-3xl font-bold">New film</h1>
       <p className="mb-8 text-studio-muted">
-        Film type fields · path/text refs only · local state · no binary upload
+        Film type fields · Free / Members / Special pay · path refs · local + film_access upsert
       </p>
       <form onSubmit={handleSubmit} className="space-y-5">
         <Field label="Title" name="title" required />
@@ -69,18 +81,35 @@ export default function NewFilmPage() {
           placeholder="packages/placeholder/v1"
           hint="Package ref string only"
         />
-        <SelectField label="Access rule" name="access_rule" defaultValue={'public' satisfies AccessRule}>
-          <option value="public">public</option>
-          <option value="members">members</option>
-          <option value="paid">paid</option>
+        <SelectField
+          label="Access rule"
+          name="access_rule"
+          value={accessRule}
+          onChange={(e) => setAccessRule(normalizeAccessRule(e.target.value))}
+        >
+          <option value="free">Free</option>
+          <option value="members">Members</option>
+          <option value="special_pay">Special pay</option>
         </SelectField>
+        {accessRule === 'special_pay' ? (
+          <Field
+            label="Special pay price (₹)"
+            name="special_pay_price_rupees"
+            type="number"
+            min={0.01}
+            step="0.01"
+            required
+            placeholder="99.00"
+            hint="One-time fee · stored as cents · admin-editable · checkout SOU-15"
+          />
+        ) : null}
         <Field label="Launch date" name="launch_at" type="date" />
         <label className="flex min-h-11 items-center gap-2 text-sm">
           <input type="checkbox" name="published" className="rounded border-zinc-600" />
           Publish (local toggle shell)
         </label>
         <div className="flex flex-wrap gap-3">
-          <PrimaryButton>Create film</PrimaryButton>
+          <PrimaryButton disabled={saving}>{saving ? 'Creating…' : 'Create film'}</PrimaryButton>
           <GhostLink href="/films">Cancel</GhostLink>
         </div>
       </form>
