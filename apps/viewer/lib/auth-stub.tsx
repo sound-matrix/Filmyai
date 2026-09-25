@@ -32,8 +32,8 @@ type AuthStubContextValue = {
   /** Staging demo access rule for placeholder watch (content lock). */
   demoAccessRule: AccessRule;
   setDemoAccessRule: (rule: AccessRule) => void;
-  /** Staging stub sign-in — no live Supabase. */
-  stubSignIn: (email: string, displayName?: string) => void;
+  /** Staging stub sign-in — optional real Supabase user_id when live auth succeeds. */
+  stubSignIn: (email: string, displayName?: string, userId?: string) => void;
   stubSignUp: (email: string, displayName: string) => void;
   stubSignOut: () => void;
   /** Mock member subscription entitlement (catalog-wide). */
@@ -117,10 +117,10 @@ export function AuthStubProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const stubSignIn = useCallback(
-    (email: string, displayName?: string) => {
+    (email: string, displayName?: string, userId?: string) => {
       const trimmed = email.trim().toLowerCase();
       const sessionNext: AuthSession = {
-        user_id: uid('user'),
+        user_id: userId?.trim() || uid('user'),
         email: trimmed,
         role: 'viewer',
         display_name: displayName?.trim() || trimmed.split('@')[0] || 'Viewer',

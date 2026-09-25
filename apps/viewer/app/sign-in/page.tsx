@@ -19,10 +19,12 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [toast, setToast] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
+    setToast('');
 
     if (!isValidEmail(email)) {
       setError('Enter a valid email address.');
@@ -33,24 +35,51 @@ export default function SignInPage() {
       return;
     }
 
+    setBusy(true);
+    const trimmed = email.trim().toLowerCase();
     const client = getSupabaseBrowserClient();
+
     if (client) {
-      setToast('Supabase client present — live auth not wired yet. Using local stub session.');
+      try {
+        const { data, error: authErr } = await client.auth.signInWithPassword({
+          email: trimmed,
+          password,
+        });
+
+        if (!authErr && data.user) {
+          const display =
+            (data.user.user_metadata?.display_name as string | undefined) ||
+            trimmed.split('@')[0] ||
+            'Viewer';
+          stubSignIn(data.user.email ?? trimmed, display, data.user.id);
+          setToast('Signed in via Supabase — local session set from real user id.');
+          setBusy(false);
+          setTimeout(() => router.push('/'), 400);
+          return;
+        }
+
+        setToast(
+          'Supabase sign-in failed — falling back to local stub session (staging walkthrough).',
+        );
+      } catch {
+        setToast('Supabase sign-in error — falling back to local stub session.');
+      }
     } else {
       setToast('Staging stub — wire when keys land. Local mock session created for walkthrough.');
     }
 
-    stubSignIn(email);
+    stubSignIn(trimmed);
+    setBusy(false);
     setTimeout(() => router.push('/'), 400);
   }
 
   return (
     <div className="mx-auto max-w-md">
-      <StubBanner message="Email/password form validates locally only. No live Supabase sign-in until CA Staging keys land." />
+      <StubBanner message="Tries live Supabase email/password when anon keys are present; falls back to local stub session. Never prints secrets." />
 
       <h1 className="mb-2 text-2xl font-bold sm:text-3xl">Sign in</h1>
       <p className="mb-6 text-sm text-filmy-muted">
-        Optional local session mock for walkthrough · clearly labeled staging-only
+        Prefer live Supabase when configured · stub fallback for walkthrough
       </p>
 
       {session && (
@@ -96,9 +125,10 @@ export default function SignInPage() {
 
         <button
           type="submit"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-filmy-on-accent transition hover:bg-filmy-accent-hover active:bg-filmy-accent-pressed"
+          disabled={busy}
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-filmy-accent px-4 text-sm font-semibold text-filmy-on-accent transition hover:bg-filmy-accent-hover active:bg-filmy-accent-pressed disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Sign in (stub)
+          {busy ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
 

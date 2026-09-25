@@ -20,7 +20,7 @@ Monorepo scaffold for the FilmyAI viewer + admin studio.
 2. **Members** — sign-in + active member entitlement; Member subscription price admin-editable in Studio (`pricing_settings`)
 3. **Special pay** — per-film one-time fee; price admin-editable per film (`film_access` / Film shell)
 
-Viewer `/watch/placeholder` has a staging-only Free / Members / Special pay toggle (content lock). Checkout / Razorpay is **SOU-15** (stub CTAs only).
+Viewer `/watch/placeholder` has a staging-only Free / Members / Special pay toggle (content lock). Checkout uses **Razorpay test mode** (SOU-15) with mock-grant fallback when keys are missing.
 
 Shared helper: `resolveAccessGate` in `@filmyai/shared`.
 
@@ -28,7 +28,7 @@ Shared helper: `resolveAccessGate` in `@filmyai/shared`.
 
 Admin CMS uses live Supabase email/password when env keys are set (soft-fail otherwise). Viewer auth remains a local stub until viewer Supabase wire-up.
 
-Draft SQL: `supabase/migrations/` — see folder README. **SOU-14 migration `20260925_0003_access_model.sql` is DRAFT for CA apply only** (additive on applied 0001/0002).
+Draft SQL: `supabase/migrations/` — see folder README. **SOU-14 `0003_access_model` + SOU-15 `0004_razorpay_orders` are DRAFT for CA apply only** (additive on applied 0001/0002).
 
 ## Setup
 
@@ -45,6 +45,9 @@ Env names (do not invent real keys):
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_APP_URL`
+- `NEXT_PUBLIC_RAZORPAY_KEY_ID` (test mode)
+- `RAZORPAY_KEY_SECRET` (test mode, server only)
+- `RAZORPAY_WEBHOOK_SECRET` (optional until webhook configured)
 
 ## Scripts
 
