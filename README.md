@@ -14,13 +14,21 @@ Monorepo scaffold for the FilmyAI viewer + admin studio.
 | Admin | `apps/admin` | 3001 |
 | Shared types | `packages/shared` | — |
 
-## Auth + entitlements (SOU-8 stubs)
+## Access model (SOU-14)
 
-Viewer `/sign-in` + `/sign-up`, header Sign in / Sign out, and `/watch/placeholder` entitlement gate shells are **UI stubs** (local mock session). Admin layout has an **Admin role required** gate with a staging-only mock toggle.
+1. **Free** — guests, no sign-in required
+2. **Members** — sign-in + active member entitlement; Member subscription price admin-editable in Studio (`pricing_settings`)
+3. **Special pay** — per-film one-time fee; price admin-editable per film (`film_access` / Film shell)
 
-Live Supabase wire only after CA Staging env keys land. Soft-fail helpers live in `apps/*/lib/supabase.ts`.
+Viewer `/watch/placeholder` has a staging-only Free / Members / Special pay toggle (content lock). Checkout / Razorpay is **SOU-15** (stub CTAs only).
 
-Draft SQL (not applied): `supabase/migrations/` — see folder README.
+Shared helper: `resolveAccessGate` in `@filmyai/shared`.
+
+## Auth (SOU-13 admin)
+
+Admin CMS uses live Supabase email/password when env keys are set (soft-fail otherwise). Viewer auth remains a local stub until viewer Supabase wire-up.
+
+Draft SQL: `supabase/migrations/` — see folder README. **SOU-14 migration `20260925_0003_access_model.sql` is DRAFT for CA apply only** (additive on applied 0001/0002).
 
 ## Setup
 
@@ -48,4 +56,4 @@ pnpm lint    # lint all packages/apps
 
 ## Stack
 
-Next.js App Router · TypeScript · Tailwind · Supabase client stubs · pnpm workspaces
+Next.js App Router · TypeScript · Tailwind · Supabase · pnpm workspaces

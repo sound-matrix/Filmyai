@@ -1,4 +1,14 @@
-export type AccessRule = 'public' | 'members' | 'paid';
+/**
+ * Product access rule (SOU-14).
+ * Canonical: 'free' | 'members' | 'special_pay'
+ * Backward-compat aliases (normalize via normalizeAccessRule):
+ *   'public' → 'free'
+ *   'paid'   → 'special_pay'
+ */
+export type AccessRule = 'free' | 'members' | 'special_pay';
+
+/** Legacy shells may still emit these; prefer AccessRule. */
+export type AccessRuleAlias = AccessRule | 'public' | 'paid';
 
 export type Film = {
   id: string;
@@ -9,6 +19,11 @@ export type Film = {
   poster_path: string;
   backdrop_path: string;
   access_rule: AccessRule;
+  /**
+   * One-time special-pay price in smallest currency unit (paise for INR).
+   * Required when access_rule is special_pay; null/0 for free/members.
+   */
+  special_pay_price_cents: number | null;
   launch_at: string;
   published: boolean;
   playback_package_key: string;
@@ -45,7 +60,7 @@ export type Collection = {
   updated_at: string;
 };
 
-/** Member access grant/revoke shell — no auth backend in week-1 MVP. */
+/** Member access grant/revoke shell — local admin_grant list in Studio. */
 export type MemberGrant = {
   id: string;
   email: string;
@@ -65,12 +80,17 @@ export type AuthSession = {
 };
 
 /**
- * Catalog entitlement (one-time / admin-grant style).
- * Pricing TBD — demo may use admin-grant via granted_by.
+ * Catalog entitlement kinds (SOU-14):
+ * - member: catalog-wide subscription (film_id/film_slug may both be null)
+ * - special_pay: one-time per-film purchase
+ * - admin_grant: studio/manual film grant
  */
+export type EntitlementKind = 'member' | 'special_pay' | 'admin_grant';
+
 export type Entitlement = {
   id: string;
   user_id: string;
+  kind: EntitlementKind;
   /** Prefer film_id when catalog IDs exist; slug for placeholder walkthrough. */
   film_id?: string | null;
   film_slug?: string | null;
@@ -80,8 +100,33 @@ export type Entitlement = {
   expires_at?: string | null;
 };
 
-/** Soft auth/entitlement gate states for UI shells (no live Stripe/Supabase). */
+/**
+ * Soft auth/entitlement gate states for UI shells.
+ * Practical for Free / Members / Special pay CTAs (checkout still SOU-15).
+ */
 export type EntitlementGateState =
+  | 'free'
+  | 'need_sign_in'
+  | 'need_member'
+  | 'need_special_pay'
+  | 'entitled'
+  /** @deprecated Prefer need_sign_in — kept for older shells. */
   | 'signed_out'
-  | 'signed_in_no_entitlement'
-  | 'entitled';
+  /** @deprecated Prefer need_member / need_special_pay. */
+  | 'signed_in_no_entitlement';
+
+/** Singleton member subscription pricing (Admin Studio editable). Currency default INR. */
+export type PricingSettings = {
+  member_price_cents: number;
+  member_currency: string;
+  updated_at: string;
+};
+
+/** Persistable film access + special-pay price keyed by slug (CMS may still be local). */
+export type FilmAccess = {
+  id: string;
+  slug: string;
+  access_rule: AccessRule;
+  special_pay_price_cents: number | null;
+  updated_at: string;
+};
