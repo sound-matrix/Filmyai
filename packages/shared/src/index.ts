@@ -1,4 +1,12 @@
-export type { AccessRule, Film, Profile } from './types';
+export type {
+  AccessRule,
+  Banner,
+  Collection,
+  CollectionVisibility,
+  Film,
+  MemberGrant,
+  Profile,
+} from './types';
 export {
   MOCK_FILMS,
   PLACEHOLDER_SLUG,
